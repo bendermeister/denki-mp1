@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MP1</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    </head>
+    <body>
+        <main class="container">
+            <nav>
+                <ul>
+                    <li><strong>BEST MP1</strong></li>
+                </ul>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Products</a></li>
+                </ul>
+            </nav>
+            <form>
+                <fieldset class="grid">
+                    <label>
+                        <select name="hasUI" aria-label="" required>
+                            <option value="0">Hat UI</option>
+                            <option value="1">Hat keine UI</option>
+                            <option value="2" selected>Beide</option>
+                        </select>
+                        Hat UI / Hat keine UI
+                    </label>
+                    <label>
+                        <input name="min" value="0" min="0" max="10"/>
+                        Minimale Punkteanzahl
+                    </label>
+                    <label>
+                        <input name="max" value="10" min="0" max="10"/>
+                        Maximale Punkteanzahl
+                    </label>
+                    <button type="submit">
+                        Filter
+                    </button>
+                </fieldset>
+            </form>
+            <br/>
+            <table hx-get="/view/table" hx-vals='{"hasUI" = "2", "min"="0", "max"="10"}' hx-target="this" hx-swap="outerHTML" hx-trigger="load"></table>
+        </main>
+    </body>
+</html>
