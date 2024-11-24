@@ -1,10 +1,14 @@
 # MP1
-## Prerequisite
-- go
+## Dependencies
+- [Go](https://go.dev/)
+- [Sqlite](https://www.sqlite.org/)
 ## Quickstart
-
-``` sh
-go run .
+``` shell
+git clone https://github.com/bendermeister/denki-mp1
+cd denki-mp1
+go build .
+./mp1 --port 8080 --data data.csv
 ```
-This will start server on localhost:8080
+## Note
+This is a school project and nothing commercial.
 
