@@ -1,0 +1,41 @@
+<div id="data">
+    <details open>
+        <summary>Anteile</summary>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Absolut:</td>
+                    <td>{{sCount}} / {{pCount}}</td>
+                </tr>
+                <tr>
+                    <td>Relativ: </td>
+                    <td>{{rCount}}%</td>
+                </tr>
+                <tr>
+                    <td>AVG Punkte</td>
+                    <td>{{avgPoints}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <div class="overflow-auto">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Hat UI</th>
+                    <th>Punkte (1-10)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range _, p := projects}}
+                <tr>
+                    <td><a href="{{p.Url}}">{{p.Name}}</a></td>
+                    <td>{{if p.HasUi}}x{{end}}</td>
+                    <td>{{if p.HasUi}}{{p.Points}}{{end}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</div>

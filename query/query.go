@@ -40,6 +40,10 @@ func Insert(name string, url string, hasUI bool, points int64) error {
 	})
 }
 
+func Count() (int64, error) {
+	return query.ProjectCount(context.TODO())
+}
+
 func Init() error {
 	dbx, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {

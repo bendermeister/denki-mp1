@@ -9,6 +9,17 @@ import (
 	"context"
 )
 
+const projectCount = `-- name: ProjectCount :one
+SELECT COUNT(*) FROM projects
+`
+
+func (q *Queries) ProjectCount(ctx context.Context) (int64, error) {
+	row := q.db.QueryRowContext(ctx, projectCount)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const projectInsert = `-- name: ProjectInsert :exec
 INSERT INTO projects (name, url, has_ui, points) VALUES(?, ?, ?, ?)
 `
@@ -31,7 +42,7 @@ func (q *Queries) ProjectInsert(ctx context.Context, arg ProjectInsertParams) er
 }
 
 const projectsGetAll = `-- name: ProjectsGetAll :many
-SELECT id, name, url, has_ui, points FROM projects
+SELECT name, url, has_ui, points FROM projects ORDER BY name ASC
 `
 
 func (q *Queries) ProjectsGetAll(ctx context.Context) ([]Project, error) {
@@ -44,7 +55,6 @@ func (q *Queries) ProjectsGetAll(ctx context.Context) ([]Project, error) {
 	for rows.Next() {
 		var i Project
 		if err := rows.Scan(
-			&i.ID,
 			&i.Name,
 			&i.Url,
 			&i.HasUi,
@@ -64,7 +74,7 @@ func (q *Queries) ProjectsGetAll(ctx context.Context) ([]Project, error) {
 }
 
 const projectsGetNoUI = `-- name: ProjectsGetNoUI :many
-SELECT id, name, url, has_ui, points FROM projects WHERE has_ui = 0
+SELECT name, url, has_ui, points FROM projects WHERE has_ui = 0 ORDER BY name ASC
 `
 
 func (q *Queries) ProjectsGetNoUI(ctx context.Context) ([]Project, error) {
@@ -77,7 +87,6 @@ func (q *Queries) ProjectsGetNoUI(ctx context.Context) ([]Project, error) {
 	for rows.Next() {
 		var i Project
 		if err := rows.Scan(
-			&i.ID,
 			&i.Name,
 			&i.Url,
 			&i.HasUi,
@@ -97,7 +106,7 @@ func (q *Queries) ProjectsGetNoUI(ctx context.Context) ([]Project, error) {
 }
 
 const projectsGetUI = `-- name: ProjectsGetUI :many
-SELECT id, name, url, has_ui, points FROM projects WHERE has_ui = 1 AND ? <= points AND points <= ?
+SELECT name, url, has_ui, points FROM projects WHERE has_ui = 1 AND ? <= points AND points <= ? ORDER BY name ASC
 `
 
 type ProjectsGetUIParams struct {
@@ -115,7 +124,6 @@ func (q *Queries) ProjectsGetUI(ctx context.Context, arg ProjectsGetUIParams) ([
 	for rows.Next() {
 		var i Project
 		if err := rows.Scan(
-			&i.ID,
 			&i.Name,
 			&i.Url,
 			&i.HasUi,

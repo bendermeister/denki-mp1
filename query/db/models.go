@@ -5,7 +5,6 @@
 package db
 
 type Project struct {
-	ID     int64
 	Name   string
 	Url    string
 	HasUi  int64
