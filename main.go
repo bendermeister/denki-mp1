@@ -32,9 +32,14 @@ func loadData(path string) error {
 		if err != nil {
 			return err
 		}
-		points, err := strconv.ParseInt(row[3], 10, 64)
-		if err != nil {
-			return err
+		var points int64
+		if !hasUI {
+			points = 0
+		} else {
+			points, err = strconv.ParseInt(row[3], 10, 64)
+			if err != nil {
+				return err
+			}
 		}
 		err = query.Insert(name, url, hasUI, points)
 		if err != nil {
