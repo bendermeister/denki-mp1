@@ -24,11 +24,18 @@ func loadData(path string) error {
 	reader := csv.NewReader(file)
 	reader.Comma = ';'
 
+	filter := make(map[string]bool)
+
 	for row, err := reader.Read(); err != io.EOF; row, err = reader.Read() {
 		log.Print(row)
 		name := strings.TrimSpace(row[0])
 		url := strings.TrimSpace(row[1])
 		hasUI, err := strconv.ParseBool(row[2])
+		_, ok := filter[url]
+		if ok {
+			continue
+		}
+		filter[url] = true
 		if err != nil {
 			return err
 		}
